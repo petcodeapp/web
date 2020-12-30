@@ -47,7 +47,7 @@ const AuthProvider: React.FC = ({ children }) => {
 				signOut: async () => {
 					await firebase.auth().signOut()
 					window.location.href = '/'
-				},
+				}
 			}}>
 			{children}
 		</AuthContext.Provider>

@@ -12,7 +12,7 @@ if (!firebase.apps.length) {
 		storageBucket: process.env.NEXT_PUBLIC_storageBucket,
 		messagingSenderId: process.env.NEXT_PUBLIC_messagingSenderId,
 		appId: process.env.NEXT_PUBLIC_appId,
-		measurementId: process.env.NEXT_PUBLIC_measurementId,
+		measurementId: process.env.NEXT_PUBLIC_measurementId
 	}
 
 	firebase.initializeApp(CLIENT_CONFIG)

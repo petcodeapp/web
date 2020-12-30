@@ -71,18 +71,24 @@ export class Pet implements IPet, AsInterface<IPet> {
 			...this,
 			contacts: this.contacts.map((x) => x.asInterface()),
 			reminders: this.reminders.map((x) => x.asInterface()),
-			vaccinations: this.vaccinations.map((x) => x.asInterface()),
+			vaccinations: this.vaccinations.map((x) => x.asInterface())
 		} as Pick<this, keyof IPet>
 	}
 
 	public async syncFirebaseValue(): Promise<Pet> {
-		const ref = firebase.firestore().collection('pets').doc(this.id)
+		const ref = firebase
+			.firestore()
+			.collection('pets')
+			.doc(this.id)
 
 		return ref.update(this.asInterface()).then(() => this)
 	}
 
 	public async syncFirebaseKey(key: keyof Pet): Promise<Pet> {
-		const ref = firebase.firestore().collection('pets').doc(this.id)
+		const ref = firebase
+			.firestore()
+			.collection('pets')
+			.doc(this.id)
 
 		return ref.update({ [key]: this[key] }).then(() => this)
 	}
