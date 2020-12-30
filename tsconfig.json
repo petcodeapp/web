@@ -17,7 +17,8 @@
 		"paths": {
 			"#types/*": ["src/types/*"],
 			"#fire/*": ["src/shared/firebase/*"],
-			"#theme/*": ["src/shared/theme/*"]
+			"#theme/*": ["src/shared/theme/*"],
+			"#components/*": ["src/shared/components/*"]
 		}
 	},
 	"include": [

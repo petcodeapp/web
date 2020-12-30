@@ -27,7 +27,7 @@ export class Contact implements IContact, AsInterface<IContact> {
 	public asInterface(): IContact {
 		return {
 			...this,
-			level: this.level as string
+			level: this.level as string,
 		} as IContact
 	}
 }

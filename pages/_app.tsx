@@ -1,10 +1,9 @@
 import {
 	ChakraProvider,
 	ColorModeProvider,
-	Container,
 	cookieStorageManager,
 	extendTheme,
-	localStorageManager
+	localStorageManager,
 } from '@chakra-ui/react'
 import { AnimatePresence } from 'framer-motion'
 import nookies from 'nookies'
@@ -18,12 +17,10 @@ const App = ({ Component, pageProps }) => (
 		<ChakraProvider theme={theme} colorModeManager={localStorageManager}>
 			<ColorModeProvider
 				options={{
-					initialColorMode: 'light'
+					initialColorMode: 'light',
 				}}>
 				<AuthProvider>
-					<Container>
-						<Component {...pageProps} />
-					</Container>
+					<Component {...pageProps} />
 				</AuthProvider>
 			</ColorModeProvider>
 		</ChakraProvider>

@@ -34,7 +34,7 @@ export class Reminder implements IReminder, AsInterface<IReminder> {
 		return {
 			...this,
 			frequency: this.frequency as string,
-			notificationMethod: this.notificationMethod as string
+			notificationMethod: this.notificationMethod as string,
 		} as IReminder
 	}
 }

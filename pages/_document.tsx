@@ -3,7 +3,7 @@ import Document, {
 	Head,
 	Main,
 	NextScript,
-	DocumentContext
+	DocumentContext,
 } from 'next/document'
 import React from 'react'
 class MyDocument extends Document {

@@ -1,7 +1,7 @@
 import {
 	GetServerSidePropsContext,
 	InferGetServerSidePropsType,
-	NextPage
+	NextPage,
 } from 'next'
 import nookies from 'nookies'
 import { Button, Text } from '@chakra-ui/react'
@@ -36,7 +36,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 		const pet = (await Promise.all(user.pets.map(Pet.get)))[0]
 
 		return {
-			props: { user, pet }
+			props: { user, pet },
 		}
 	} catch (err) {
 		console.error(`❌ Ran into error, redirecting now. Error: ${err}`)
@@ -49,11 +49,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 		return {
 			redirect: {
 				permanent: false,
-				destination: '/login'
+				destination: '/login',
 			},
 			// `as never` is required for correct type inference
 			// by InferGetServerSidePropsType below
-			props: {} as never
+			props: {} as never,
 		}
 	}
 }

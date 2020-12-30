@@ -7,7 +7,7 @@ if (!firebaseAdmin.apps.length) {
 		credential: firebaseAdmin.credential.cert(
 			JSON.parse(process.env.adminSecret)
 		),
-		databaseURL: process.env.NEXT_PUBLIC_databaseURL
+		databaseURL: process.env.NEXT_PUBLIC_databaseURL,
 	})
 }
 
