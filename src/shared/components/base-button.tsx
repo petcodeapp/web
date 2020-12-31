@@ -1,14 +1,11 @@
 import React from 'react'
 
 import { Button } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
 
-const MotionButton = motion.custom(Button)
-
-type BaseButtonProps = React.ComponentProps<typeof MotionButton>
-
-const BaseButton: React.FC<BaseButtonProps> = ({ ...props }) => (
-	<MotionButton
+const BaseButton: React.FC<React.ComponentProps<typeof Button>> = ({
+	...props
+}) => (
+	<Button
 		rounded="full"
 		size="lg"
 		variant="solid"

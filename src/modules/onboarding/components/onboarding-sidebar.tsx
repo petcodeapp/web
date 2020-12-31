@@ -7,7 +7,7 @@ const OnboardingSidebar: React.FC = () => {
 	const theme = useTheme() as PetCodeTheme
 
 	return (
-		<Flex direction="row" marginRight="calc(100% * 153 / 1024)">
+		<Flex direction="row" marginRight="calc(50% * 153 / 1024)">
 			<Stack
 				backgroundColor="petcode.blue.400"
 				alignItems="center"
@@ -15,7 +15,7 @@ const OnboardingSidebar: React.FC = () => {
 				padding={8}
 				paddingLeft={16}
 				boxSizing="content-box"
-				flexBasis="325px">
+				width="325px">
 				<Box flexGrow={1} />
 				<Image src="/media/petcode-logo-with-qr-code.png" height="4rem" />
 				<Box flexGrow={1} />
