@@ -9,6 +9,7 @@ import { onboardingActions } from './reducers/index'
 import OnboardingSidebar from './components/onboarding-sidebar'
 import CreateYourAccountStep from './components/create-your-account-step'
 import ConnectYourTagStep from './components/connect-your-tag-step'
+import PetInformationStep from './components/pet-information-step'
 
 const OnboardingStep: React.FC<{
 	match: string | RegExp
@@ -58,6 +59,9 @@ const Onboarding: React.FC = () => {
 			</OnboardingStep>
 			<OnboardingStep match="connect-your-tag">
 				{() => <ConnectYourTagStep />}
+			</OnboardingStep>
+			<OnboardingStep match="pet-information">
+				{() => <PetInformationStep />}
 			</OnboardingStep>
 			<Box flexGrow={1} />
 		</Flex>

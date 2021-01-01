@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import OnboardingInput from './onboarding-input'
 import OnboardingContainer from './onboarding-container'
 import BaseButton from '#components/base-button'
-import FormikErrorMessage from '#components/unified-error-message'
+import UnifiedErrorMessage from '#components/unified-error-message'
 
 import { PetCodeTheme } from '#theme/index'
 
@@ -109,7 +109,7 @@ const ConnectYourPetCodeTagStep: React.FC = () => {
 							</MotionBox>
 						</Flex>
 					</Box>
-					<FormikErrorMessage touched={touched} errors={errors} />
+					<UnifiedErrorMessage touched={touched} errors={errors} />
 					<BaseButton
 						type="submit"
 						alignSelf="end"

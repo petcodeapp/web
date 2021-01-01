@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import OnboardingContainer from './onboarding-container'
 import OnboardingInput from './onboarding-input'
 import BaseButton from '#components/base-button'
-import FormikErrorMessage from '#components/unified-error-message'
+import UnifiedErrorMessage from '#components/unified-error-message'
 
 import useOnboarding from '../hooks/index'
 import { onboardingActions } from '../reducers/index'
@@ -96,7 +96,7 @@ const CreateYourPetCodeAccountStep: React.FC = () => {
 									/>
 								</Box>
 							</Stack>
-							<FormikErrorMessage touched={touched} errors={errors} />
+							<UnifiedErrorMessage touched={touched} errors={errors} />
 							<BaseButton
 								type="submit"
 								size="lg"
