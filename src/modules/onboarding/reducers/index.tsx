@@ -7,56 +7,67 @@ import { IReminder } from '#types/models/pet/Reminder'
 
 export interface IOnboardingState {
 	step: string
-	account: {
-		tagId: string
+	accountInfo: {
 		fullName: string
-		password: string
 		email: string
 		phoneNumber: string
+		password: string
+		confirmPassword: string
 	}
-	pet: IPet
+	tagInfo: {
+		tagId: string
+	}
+	petInfo: Pick<
+		IPet,
+		| 'name'
+		| 'species'
+		| 'breed'
+		| 'birthdate'
+		| 'color'
+		| 'temperament'
+		| 'isServiceAnimal'
+	>
+	owners: IContact[]
+	medicalInfo: {
+		vetName: string
+		vetPhoneNumber: string
+		allergies: string
+		specialNeeds: string
+	}
+	vaccinations: IVaccination[]
+	reminders: IReminder[]
 }
 
 export const INITIAL_ONBOARDING_STATE: IOnboardingState = {
 	step: 'create-your-account',
-	account: {
-		tagId: '',
+	accountInfo: {
 		fullName: '',
-		password: '',
 		email: '',
 		phoneNumber: '',
+		password: '',
+		confirmPassword: '',
 	},
-	pet: {
-		contacts: [],
-		reminders: [],
-		species: '',
-		vet: {
-			phoneNumber: {
-				value: '',
-				visible: true,
-			},
-			name: {
-				value: '',
-				visible: true,
-			},
-		},
-		specialNeeds: {
-			value: '',
-			visible: true,
-		},
-		temperament: '',
+	tagInfo: {
+		tagId: '',
+	},
+	petInfo: {
 		name: '',
-		isLost: false,
-		isServiceAnimal: null,
-		color: '',
+		species: '',
 		breed: '',
 		birthdate: null,
-		allergies: {
-			value: '',
-			visible: true,
-		},
-		vaccinations: [],
+		color: '',
+		temperament: '',
+		isServiceAnimal: null,
 	},
+	owners: [],
+	medicalInfo: {
+		vetName: '',
+		vetPhoneNumber: '',
+		allergies: '',
+		specialNeeds: '',
+	},
+	vaccinations: [],
+	reminders: [],
 }
 
 const onboardingSlice = createSlice({
@@ -67,77 +78,44 @@ const onboardingSlice = createSlice({
 			state.step = action.payload
 			return state
 		},
-		createYourAccount: (
+		setAccountInformation: (
 			state,
-			action: PayloadAction<
-				Pick<
-					IOnboardingState['account'],
-					'fullName' | 'password' | 'email' | 'phoneNumber'
-				>
-			>
+			action: PayloadAction<IOnboardingState['accountInfo']>
 		) => {
-			state.account = {
-				...state.account,
-				...action.payload,
-			}
+			state.accountInfo = action.payload
 			return state
 		},
-		connectYourTag: (
+		setTagInformation: (
 			state,
-			action: PayloadAction<Pick<IOnboardingState['account'], 'tagId'>>
+			action: PayloadAction<IOnboardingState['tagInfo']>
 		) => {
-			state.account = {
-				...state.account,
-				...action.payload,
-			}
+			state.tagInfo = action.payload
 			return state
 		},
 		setPetInformation: (
 			state,
-			action: PayloadAction<
-				Pick<
-					IPet,
-					| 'name'
-					| 'species'
-					| 'breed'
-					| 'birthdate'
-					| 'color'
-					| 'temperament'
-					| 'isServiceAnimal'
-				>
-			>
+			action: PayloadAction<IOnboardingState['petInfo']>
 		) => {
-			state.pet = {
-				...state.pet,
-				...action.payload,
-			}
+			state.petInfo = action.payload
 			return state
 		},
 		addOwner: (state, action: PayloadAction<IContact>) => {
-			state.pet.contacts.push(action.payload)
+			state.owners.push(action.payload)
 			return state
 		},
 		setMedicalInformation: (
 			state,
-			action: PayloadAction<{
-				allergies: string
-				specialNeeds: string
-				vetName: string
-				vetPhoneNumber: string
-			}>
+			action: PayloadAction<IOnboardingState['medicalInfo']>
 		) => {
-			state.pet.allergies.value = action.payload.allergies
-			state.pet.specialNeeds.value = action.payload.specialNeeds
-			state.pet.vet.name.value = action.payload.vetName
-			state.pet.vet.phoneNumber.value = action.payload.vetPhoneNumber
+			state.medicalInfo = action.payload
 			return state
 		},
 		addVaccination: (state, action: PayloadAction<IVaccination>) => {
-			state.pet.vaccinations.push(action.payload)
+			state.vaccinations.push(action.payload)
 			return state
 		},
 		addReminder: (state, action: PayloadAction<IReminder>) => {
-			state.pet.reminders.push(action.payload)
+			state.reminders.push(action.payload)
 			return state
 		},
 	},

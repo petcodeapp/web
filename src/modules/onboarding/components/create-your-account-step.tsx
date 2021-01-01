@@ -9,19 +9,14 @@ import OnboardingInput from './onboarding-input'
 import BaseButton from '#components/base-button'
 import FormikErrorMessage from '#components/unified-error-message'
 
-import 'yup-phone'
+import useOnboarding from '../hooks/index'
+import { onboardingActions } from '../reducers/index'
 
-const INITIAL_VALUES = {
-	fullName: '',
-	emailAddress: '',
-	phoneNumber: '',
-	password: '',
-	confirmPassword: '',
-}
+import 'yup-phone'
 
 const CreateYourPetCodeAccountSchema = Yup.object().shape({
 	fullName: Yup.string().label('Full name').required(),
-	emailAddress: Yup.string().label('Email address').email().required(),
+	email: Yup.string().label('Email address').email().required(),
 	phoneNumber: Yup.string().label('Phone number').phone('US', true).required(),
 	password: Yup.string()
 		.label('Password')
@@ -39,83 +34,90 @@ const CreateYourPetCodeAccountSchema = Yup.object().shape({
 		.required(),
 })
 
-const CreateYourPetCodeAccountStep: React.FC = () => (
-	<Formik
-		initialValues={INITIAL_VALUES}
-		validationSchema={CreateYourPetCodeAccountSchema}
-		onSubmit={console.log}>
-		{({ errors, touched, handleSubmit }) => (
-			<OnboardingContainer>
-				<Box flexGrow={1} />
-				<Stack spacing={3}>
-					<Text fontWeight="bold" fontSize="2.5rem">
-						Create Your PetCode Account
-					</Text>
-					<Text fontSize="lg" color="petcode.neutral.600">
-						New to PetCode? Get started with your account today!
-					</Text>
-				</Stack>
-				<Form>
-					<Stack spacing={6}>
-						<Field
-							as={OnboardingInput}
-							name="fullName"
-							placeholder="Full Name"
-							autoComplete="name"
-						/>
-						<Field
-							as={OnboardingInput}
-							type="email"
-							autoComplete="email"
-							name="emailAddress"
-							placeholder="Email Address"
-						/>
-						<Field
-							as={OnboardingInput}
-							type="tel"
-							autoComplete="tel"
-							name="phoneNumber"
-							placeholder="Phone Number"
-						/>
-						<Stack isInline spacing={6}>
-							<Box flexBasis="50%">
-								<Field
-									as={OnboardingInput}
-									type="password"
-									name="password"
-									placeholder="Password"
-								/>
-							</Box>
-							<Box flexBasis="50%">
-								<Field
-									as={OnboardingInput}
-									type="password"
-									name="confirmPassword"
-									placeholder="Confirm Password"
-								/>
-							</Box>
-						</Stack>
-						<FormikErrorMessage touched={touched} errors={errors} />
-						<BaseButton
-							type="submit"
-							size="lg"
-							alignSelf="end"
-							colorScheme="petcode.blue"
-							onClick={handleSubmit as any}>
-							<Text
-								textTransform="uppercase"
-								letterSpacing="0.07em"
-								lineHeight="1">
-								Next Step
-							</Text>
-							<ChevronRightIcon boxSize="24px" />
-						</BaseButton>
+const CreateYourPetCodeAccountStep: React.FC = () => {
+	const [state, dispatch] = useOnboarding()
+
+	return (
+		<Formik
+			initialValues={state.accountInfo}
+			validationSchema={CreateYourPetCodeAccountSchema}
+			onSubmit={(values) => {
+				dispatch(onboardingActions.setAccountInformation(values))
+				dispatch(onboardingActions.setStep('connect-your-tag'))
+			}}>
+			{({ errors, touched, handleSubmit }) => (
+				<OnboardingContainer>
+					<Box flexGrow={1} />
+					<Stack spacing={3}>
+						<Text fontWeight="bold" fontSize="2.5rem">
+							Create Your PetCode Account
+						</Text>
+						<Text fontSize="lg" color="petcode.neutral.600">
+							New to PetCode? Get started with your account today!
+						</Text>
 					</Stack>
-				</Form>
-				<Box flexGrow={1} />
-			</OnboardingContainer>
-		)}
-	</Formik>
-)
+					<Form>
+						<Stack spacing={6}>
+							<Field
+								as={OnboardingInput}
+								name="fullName"
+								placeholder="Full Name"
+								autoComplete="name"
+							/>
+							<Field
+								as={OnboardingInput}
+								type="email"
+								autoComplete="email"
+								name="email"
+								placeholder="Email Address"
+							/>
+							<Field
+								as={OnboardingInput}
+								type="tel"
+								autoComplete="tel"
+								name="phoneNumber"
+								placeholder="Phone Number"
+							/>
+							<Stack isInline spacing={6}>
+								<Box flexBasis="50%">
+									<Field
+										as={OnboardingInput}
+										type="password"
+										name="password"
+										placeholder="Password"
+									/>
+								</Box>
+								<Box flexBasis="50%">
+									<Field
+										as={OnboardingInput}
+										type="password"
+										name="confirmPassword"
+										placeholder="Confirm Password"
+									/>
+								</Box>
+							</Stack>
+							<FormikErrorMessage touched={touched} errors={errors} />
+							<BaseButton
+								type="submit"
+								size="lg"
+								alignSelf="end"
+								colorScheme="petcode.blue"
+								onClick={handleSubmit as any}>
+								<Text
+									textTransform="uppercase"
+									letterSpacing="0.07em"
+									lineHeight="1">
+									Next Step
+								</Text>
+								<ChevronRightIcon boxSize="24px" />
+							</BaseButton>
+						</Stack>
+					</Form>
+					<Box flexGrow={1} />
+				</OnboardingContainer>
+			)}
+		</Formik>
+	)
+}
 
 export default CreateYourPetCodeAccountStep

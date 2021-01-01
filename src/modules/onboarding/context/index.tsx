@@ -1,8 +1,5 @@
 import React, { Dispatch, useEffect, useReducer } from 'react'
-import onboardingReducer, {
-	IOnboardingState,
-	INITIAL_ONBOARDING_STATE,
-} from '../reducers/index'
+import onboardingReducer, { INITIAL_ONBOARDING_STATE } from '../reducers/index'
 
 export const OnboardingContext = React.createContext<
 	[
@@ -26,6 +23,12 @@ const OnboardingProvider: React.FC = ({ children }) => {
 			? JSON.parse(localStorage.getItem('onboarding'))
 			: INITIAL_ONBOARDING_STATE
 	)
+
+	useEffect(() => {
+		if (!window.location.hash) {
+			localStorage.removeItem('onboarding')
+		}
+	}, [])
 
 	useEffect(() => {
 		localStorage.setItem('onboarding', JSON.stringify(state))
