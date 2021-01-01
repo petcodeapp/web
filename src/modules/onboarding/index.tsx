@@ -2,28 +2,28 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Box, Flex } from '@chakra-ui/react'
 
-import { AnimatePresence } from 'framer-motion'
 import OnboardingProvider from './context/index'
 import useOnboarding from './hooks/index'
 import { onboardingActions } from './reducers/index'
 
 import OnboardingSidebar from './components/onboarding-sidebar'
-import OnboardingContainer from './components/onboarding-container'
 import CreateYourAccountStep from './components/create-your-account-step'
 import ConnectYourTagStep from './components/connect-your-tag-step'
 
-const OnboardingStep: React.FC = () => {
+const OnboardingStep: React.FC<{
+	match: string | RegExp
+	children: (match?: RegExpMatchArray) => React.ReactNode
+}> = ({ match, children }) => {
 	const [state] = useOnboarding()
 
-	if (state.step === 'create-your-account') {
-		return <CreateYourAccountStep />
+	if (typeof match === 'string' && state.step === match) {
+		return <>{children()}</>
+	}
+	if (match instanceof RegExp && match.test(state.step)) {
+		return <>{children(state.step.match(match))}</>
 	}
 
-	if (state.step === 'connect-your-tag') {
-		return <ConnectYourTagStep />
-	}
-
-	return <OnboardingContainer />
+	return null
 }
 
 const Onboarding: React.FC = () => {
@@ -53,9 +53,12 @@ const Onboarding: React.FC = () => {
 		<Flex direction="row" minHeight="100vh">
 			<OnboardingSidebar />
 			<Box flexGrow={1} />
-			<AnimatePresence exitBeforeEnter>
-				<OnboardingStep key={state.step} />
-			</AnimatePresence>
+			<OnboardingStep match="create-your-account">
+				{() => <CreateYourAccountStep />}
+			</OnboardingStep>
+			<OnboardingStep match="connect-your-tag">
+				{() => <ConnectYourTagStep />}
+			</OnboardingStep>
 			<Box flexGrow={1} />
 		</Flex>
 	)
