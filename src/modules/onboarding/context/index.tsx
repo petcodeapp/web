@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useReducer } from 'react'
 import onboardingReducer, {
 	IOnboardingState,
-	ONBOARDING_STATE,
+	INITIAL_ONBOARDING_STATE,
 } from '../reducers/index'
 
 export const OnboardingContext = React.createContext<
@@ -23,8 +23,8 @@ const OnboardingProvider: React.FC = ({ children }) => {
 	const [state, dispatch] = useReducer<typeof onboardingReducer>(
 		onboardingReducer,
 		shouldUsePersistedState
-			? (JSON.parse(localStorage.getItem('onboarding')) as IOnboardingState)
-			: ONBOARDING_STATE
+			? JSON.parse(localStorage.getItem('onboarding'))
+			: INITIAL_ONBOARDING_STATE
 	)
 
 	useEffect(() => {
