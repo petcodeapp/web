@@ -16,8 +16,8 @@ const OnboardingStep: React.FC = () => {
 
 	if (state.step === 'create-your-account') {
 		return <CreateYourAccountStep />
-	} 
-	
+	}
+
 	return <OnboardingContainer />
 }
 
@@ -28,7 +28,10 @@ const Onboarding: React.FC = () => {
 	useEffect(() => {
 		// handle external hash changes (e.g. history navigation)
 		const hashChangeHandler = () => {
-			if (window.location.hash && state.step !== window.location.hash.substr(1)) {
+			if (
+				window.location.hash &&
+				state.step !== window.location.hash.substr(1)
+			) {
 				dispatch(onboardingActions.setStep(window.location.hash.substr(1)))
 			}
 		}
