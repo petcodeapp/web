@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect, useReducer } from 'react'
+import React, { Dispatch, useCallback, useEffect, useReducer } from 'react'
 import onboardingReducer, { INITIAL_ONBOARDING_STATE } from '../reducers/index'
 
 export const OnboardingContext = React.createContext<
@@ -7,7 +7,8 @@ export const OnboardingContext = React.createContext<
 		Dispatch<{
 			type: string
 			[key: string]: any
-		}>
+		}>,
+		() => void
 	]
 >(null)
 
@@ -24,6 +25,10 @@ const OnboardingProvider: React.FC = ({ children }) => {
 			: INITIAL_ONBOARDING_STATE
 	)
 
+	const finishOnboarding = useCallback(() => {
+		alert(state)
+	}, [state])
+
 	useEffect(() => {
 		if (!window.location.hash) {
 			localStorage.removeItem('onboarding')
@@ -35,7 +40,7 @@ const OnboardingProvider: React.FC = ({ children }) => {
 	}, [state])
 
 	return (
-		<OnboardingContext.Provider value={[state, dispatch]}>
+		<OnboardingContext.Provider value={[state, dispatch, finishOnboarding]}>
 			{children}
 		</OnboardingContext.Provider>
 	)
