@@ -48,7 +48,7 @@ const PetInformationStep: React.FC = () => {
 			validationSchema={PetInformationSchema}
 			onSubmit={(values) => {
 				dispatch(onboardingActions.setPetInformation(values))
-				dispatch(onboardingActions.setStep('owner-information'))
+				dispatch(onboardingActions.setStep('primary-owner-information'))
 			}}>
 			{({ errors, touched, handleSubmit, setFieldValue, values }) => {
 				let breedOptions: string[] = []

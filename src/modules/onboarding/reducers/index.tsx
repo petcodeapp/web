@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { IPet } from '#types/models/pet'
-import { IContact } from '#types/models/pet/Contact'
 import { IVaccination } from '#types/models/pet/Vaccination'
 import { IReminder } from '#types/models/pet/Reminder'
 
@@ -27,7 +26,13 @@ export interface IOnboardingState {
 		| 'temperament'
 		| 'isServiceAnimal'
 	>
-	owners: IContact[]
+	owners: {
+		name: string
+		email: string
+		phoneNumber: string
+		address: string
+		level: string
+	}[]
 	medicalInfo: {
 		vetName: string
 		vetPhoneNumber: string
@@ -99,8 +104,14 @@ const onboardingSlice = createSlice({
 			state.petInfo = action.payload
 			return state
 		},
-		addOwner: (state, action: PayloadAction<IContact>) => {
-			state.owners.push(action.payload)
+		setOwnerAtIndex: (
+			state,
+			action: PayloadAction<{
+				index: number
+				owner: IOnboardingState['owners'][number]
+			}>
+		) => {
+			state.owners[action.payload.index] = action.payload.owner
 			return state
 		},
 		setMedicalInformation: (
@@ -110,12 +121,24 @@ const onboardingSlice = createSlice({
 			state.medicalInfo = action.payload
 			return state
 		},
-		addVaccination: (state, action: PayloadAction<IVaccination>) => {
-			state.vaccinations.push(action.payload)
+		setVaccinationAtIndex: (
+			state,
+			action: PayloadAction<{
+				index: number
+				vaccination: IVaccination
+			}>
+		) => {
+			state.vaccinations[action.payload.index] = action.payload.vaccination
 			return state
 		},
-		addReminder: (state, action: PayloadAction<IReminder>) => {
-			state.reminders.push(action.payload)
+		setReminderAtIndex: (
+			state,
+			action: PayloadAction<{
+				index: number
+				reminder: IReminder
+			}>
+		) => {
+			state.reminders[action.payload.index] = action.payload.reminder
 			return state
 		},
 	},

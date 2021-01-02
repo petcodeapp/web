@@ -10,6 +10,7 @@ import OnboardingSidebar from './components/onboarding-sidebar'
 import CreateYourAccountStep from './components/create-your-account-step'
 import ConnectYourTagStep from './components/connect-your-tag-step'
 import PetInformationStep from './components/pet-information-step'
+import OwnerInformationStep from './components/owner-information-step'
 
 const OnboardingStep: React.FC<{
 	match: string | RegExp
@@ -62,6 +63,11 @@ const Onboarding: React.FC = () => {
 			</OnboardingStep>
 			<OnboardingStep match="pet-information">
 				{() => <PetInformationStep />}
+			</OnboardingStep>
+			<OnboardingStep match={/^(primary|secondary)-owner-information$/}>
+				{(match) => (
+					<OwnerInformationStep level={match[1] as 'primary' | 'secondary'} />
+				)}
 			</OnboardingStep>
 			<Box flexGrow={1} />
 		</Flex>
