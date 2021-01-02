@@ -86,6 +86,14 @@ const PetInformationStep: React.FC = () => {
 												label: option,
 												value: option,
 											}))}
+											value={
+												values.species
+													? {
+															label: values.species,
+															value: values.species,
+													  }
+													: null
+											}
 											onChange={(newValue: any) => {
 												setFieldValue('species', newValue.value)
 												setFieldValue('breed', '')
@@ -144,6 +152,14 @@ const PetInformationStep: React.FC = () => {
 										label: option,
 										value: option,
 									}))}
+									value={
+										values.isServiceAnimal != null
+											? {
+													label: values.isServiceAnimal ? 'Yes' : 'No',
+													value: values.isServiceAnimal ? 'Yes' : 'No',
+											  }
+											: null
+									}
 									onChange={(newValue: any) =>
 										setFieldValue('isServiceAnimal', newValue.value === 'Yes')
 									}
