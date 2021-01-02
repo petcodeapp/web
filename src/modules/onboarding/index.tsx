@@ -36,6 +36,13 @@ const Onboarding: React.FC = () => {
 	const router = useRouter()
 
 	useEffect(() => {
+		if (state.step === 'complete') {
+			router.push('/onboarding/complete')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state.step])
+
+	useEffect(() => {
 		// handle external hash changes (e.g. history navigation)
 		const hashChangeHandler = () => {
 			if (
@@ -47,10 +54,14 @@ const Onboarding: React.FC = () => {
 		}
 		router.events.on('hashChangeComplete', hashChangeHandler)
 
+		return () => router.events.off('hashChangeComplete', hashChangeHandler)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state.step])
+
+	useEffect(() => {
 		// sync state w/ page hash
 		router.push(`#${state.step}`, undefined, { shallow: true })
 
-		return () => router.events.off('hashChangeComplete', hashChangeHandler)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state.step])
 

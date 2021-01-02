@@ -14,7 +14,7 @@ export const OnboardingContext = React.createContext<
 	]
 >(null)
 
-const deserializeState = (
+export const deserializeOnboardingState = (
 	serializedState: Record<string, any>
 ): IOnboardingState => {
 	serializedState.petInfo.birthdate = new Date(
@@ -39,7 +39,9 @@ const OnboardingProvider: React.FC = ({ children }) => {
 	const [state, dispatch] = useReducer<typeof onboardingReducer>(
 		onboardingReducer,
 		shouldUsePersistedState
-			? deserializeState(JSON.parse(localStorage.getItem('onboarding')))
+			? deserializeOnboardingState(
+					JSON.parse(localStorage.getItem('onboarding'))
+			  )
 			: INITIAL_ONBOARDING_STATE
 	)
 

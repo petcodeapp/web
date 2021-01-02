@@ -11,8 +11,8 @@ import OnboardingSelect, { OnboardingCreatable } from './onboarding-select'
 import BaseButton from '#components/base-button'
 import UnifiedErrorMessage from '#components/unified-error-message'
 
-import useOnboarding from '../hooks'
-import { onboardingActions } from '../reducers'
+import useOnboarding from '../hooks/index'
+import { onboardingActions } from '../reducers/index'
 
 import { DOG_BREEDS, CAT_BREEDS } from '#data/breeds'
 
