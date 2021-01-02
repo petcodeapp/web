@@ -57,7 +57,7 @@ const OwnerInformationStep: React.FC<OwnerInformationStepProps> = ({
 					onboardingActions.setStep(
 						isAddingSecondaryOwner
 							? 'secondary-owner-information'
-							: 'medical-info'
+							: 'medical-information'
 					)
 				)
 			}}>

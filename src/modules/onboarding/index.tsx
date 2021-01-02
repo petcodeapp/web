@@ -11,6 +11,7 @@ import CreateYourAccountStep from './components/create-your-account-step'
 import ConnectYourTagStep from './components/connect-your-tag-step'
 import PetInformationStep from './components/pet-information-step'
 import OwnerInformationStep from './components/owner-information-step'
+import MedicalInformationStep from './components/medical-information-step'
 
 const OnboardingStep: React.FC<{
 	match: string | RegExp
@@ -71,6 +72,9 @@ const Onboarding: React.FC = () => {
 						level={match[1] as 'primary' | 'secondary'}
 					/>
 				)}
+			</OnboardingStep>
+			<OnboardingStep match="medical-information">
+				{() => <MedicalInformationStep />}
 			</OnboardingStep>
 			<Box flexGrow={1} />
 		</Flex>
