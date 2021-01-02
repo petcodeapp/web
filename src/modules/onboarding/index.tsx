@@ -13,6 +13,7 @@ import PetInformationStep from './components/pet-information-step'
 import OwnerInformationStep from './components/owner-information-step'
 import MedicalInformationStep from './components/medical-information-step'
 import VaccinationHistoryStep from './components/vaccination-history-step'
+import RemindersStep from './components/reminders-step'
 
 const OnboardingStep: React.FC<{
 	match: string | RegExp
@@ -83,6 +84,11 @@ const Onboarding: React.FC = () => {
 						key={match[1]}
 						index={Number(match[1] ?? 0)}
 					/>
+				)}
+			</OnboardingStep>
+			<OnboardingStep match={/^reminders(?:-([0-9]))?$/}>
+				{(match) => (
+					<RemindersStep key={match[1]} index={Number(match[1] ?? 0)} />
 				)}
 			</OnboardingStep>
 			<Box flexGrow={1} />
