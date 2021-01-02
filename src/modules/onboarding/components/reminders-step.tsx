@@ -86,19 +86,25 @@ const RemindersStep: React.FC<RemindersStepProps> = ({ index }) => {
 								name="name"
 								placeholder="Reminder Name"
 							/>
-							<DatePicker
-								selected={values.date}
-								showPopperArrow={false}
-								onChange={(date) => setFieldValue('date', date)}
-								placeholderText="Reminder Date"
-								customInput={<OnboardingInput />}
-							/>
-							<Field
-								as={OnboardingInput}
-								type="time"
-								name="time"
-								placeholder="Reminder Time"
-							/>
+							<Stack isInline spacing={6}>
+								<Box flexBasis="50%">
+									<DatePicker
+										selected={values.date}
+										showPopperArrow={false}
+										onChange={(date) => setFieldValue('date', date)}
+										placeholderText="Reminder Date"
+										customInput={<OnboardingInput />}
+									/>
+								</Box>
+								<Box flexBasis="50%">
+									<Field
+										as={OnboardingInput}
+										type="time"
+										name="time"
+										placeholder="Reminder Time"
+									/>
+								</Box>
+							</Stack>
 							<OnboardingSelect
 								options={['Weekly', 'Daily', 'Hourly'].map((option) => ({
 									label: option,
