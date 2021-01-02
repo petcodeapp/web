@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import { Box, Stack, Text } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import { Formik, Form, Field } from 'formik'
@@ -38,85 +39,90 @@ const CreateYourPetCodeAccountStep: React.FC = () => {
 	const [state, dispatch] = useOnboarding()
 
 	return (
-		<Formik
-			initialValues={state.accountInfo}
-			validationSchema={CreateYourPetCodeAccountSchema}
-			onSubmit={(values) => {
-				dispatch(onboardingActions.setAccountInformation(values))
-				dispatch(onboardingActions.setStep('connect-your-tag'))
-			}}>
-			{({ errors, touched, handleSubmit }) => (
-				<OnboardingContainer>
-					<Box flexGrow={1} />
-					<Stack spacing={3}>
-						<Text fontWeight="bold" fontSize="2.5rem">
-							Create Your PetCode Account
-						</Text>
-						<Text fontSize="lg" color="petcode.neutral.600">
-							New to PetCode? Get started with your account today!
-						</Text>
-					</Stack>
-					<Form>
-						<Stack spacing={6}>
-							<Field
-								as={OnboardingInput}
-								name="fullName"
-								placeholder="Full Name"
-								autoComplete="name"
-							/>
-							<Field
-								as={OnboardingInput}
-								type="email"
-								autoComplete="email"
-								name="email"
-								placeholder="Email Address"
-							/>
-							<Field
-								as={OnboardingInput}
-								type="tel"
-								autoComplete="tel"
-								name="phoneNumber"
-								placeholder="Phone Number"
-							/>
-							<Stack isInline spacing={6}>
-								<Box flexBasis="50%">
-									<Field
-										as={OnboardingInput}
-										type="password"
-										name="password"
-										placeholder="Password"
-									/>
-								</Box>
-								<Box flexBasis="50%">
-									<Field
-										as={OnboardingInput}
-										type="password"
-										name="confirmPassword"
-										placeholder="Confirm Password"
-									/>
-								</Box>
-							</Stack>
-							<UnifiedErrorMessage touched={touched} errors={errors} />
-							<BaseButton
-								type="submit"
-								size="lg"
-								alignSelf="end"
-								colorScheme="petcode.blue"
-								onClick={handleSubmit as any}>
-								<Text
-									textTransform="uppercase"
-									letterSpacing="0.07em"
-									lineHeight="1">
-									Next Step
-								</Text>
-								<ChevronRightIcon boxSize="24px" />
-							</BaseButton>
+		<>
+			<Head>
+				<title>PetCode - Create Your Account</title>
+			</Head>
+			<Formik
+				initialValues={state.accountInfo}
+				validationSchema={CreateYourPetCodeAccountSchema}
+				onSubmit={(values) => {
+					dispatch(onboardingActions.setAccountInformation(values))
+					dispatch(onboardingActions.setStep('connect-your-tag'))
+				}}>
+				{({ errors, touched, handleSubmit }) => (
+					<OnboardingContainer>
+						<Box flexGrow={1} />
+						<Stack spacing={3}>
+							<Text fontWeight="bold" fontSize="2.5rem">
+								Create Your PetCode Account
+							</Text>
+							<Text fontSize="lg" color="petcode.neutral.600">
+								New to PetCode? Get started with your account today!
+							</Text>
 						</Stack>
-					</Form>
-					<Box flexGrow={1} />
-				</OnboardingContainer>
-			)}
-		</Formik>
+						<Form>
+							<Stack spacing={6}>
+								<Field
+									as={OnboardingInput}
+									name="fullName"
+									placeholder="Full Name"
+									autoComplete="name"
+								/>
+								<Field
+									as={OnboardingInput}
+									type="email"
+									autoComplete="email"
+									name="email"
+									placeholder="Email Address"
+								/>
+								<Field
+									as={OnboardingInput}
+									type="tel"
+									autoComplete="tel"
+									name="phoneNumber"
+									placeholder="Phone Number"
+								/>
+								<Stack isInline spacing={6}>
+									<Box flexBasis="50%">
+										<Field
+											as={OnboardingInput}
+											type="password"
+											name="password"
+											placeholder="Password"
+										/>
+									</Box>
+									<Box flexBasis="50%">
+										<Field
+											as={OnboardingInput}
+											type="password"
+											name="confirmPassword"
+											placeholder="Confirm Password"
+										/>
+									</Box>
+								</Stack>
+								<UnifiedErrorMessage touched={touched} errors={errors} />
+								<BaseButton
+									type="submit"
+									size="lg"
+									alignSelf="end"
+									colorScheme="petcode.blue"
+									onClick={handleSubmit as any}>
+									<Text
+										textTransform="uppercase"
+										letterSpacing="0.07em"
+										lineHeight="1">
+										Next Step
+									</Text>
+									<ChevronRightIcon boxSize="24px" />
+								</BaseButton>
+							</Stack>
+						</Form>
+						<Box flexGrow={1} />
+					</OnboardingContainer>
+				)}
+			</Formik>
+		</>
 	)
 }
 

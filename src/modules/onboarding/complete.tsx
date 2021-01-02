@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import Head from 'next/head'
 import { Box, Flex, Image, Stack, Text } from '@chakra-ui/react'
 
 import { deserializeOnboardingState } from './context/index'
@@ -94,35 +95,40 @@ const OnboardingCompletePage = () => {
 	}, [])
 
 	return (
-		<Flex
-			direction="row"
-			justifyContent="center"
-			width="100%"
-			backgroundColor="petcode.blue.400"
-			minHeight="100vh">
-			<Stack
-				alignItems="center"
-				color="white"
-				paddingY={8}
-				paddingX={16}
-				boxSizing="content-box"
-				maxWidth="350px"
-				textAlign="center">
-				<Box flexGrow={1} />
-				<Image src="/media/petcode-logo-with-qr-code.png" height="4rem" />
-				<Box flexGrow={1} />
-				<Text fontWeight="bold" fontSize="2.5rem">
-					You're All Set!
-				</Text>
-				<Text fontSize="lg">
-					Congrats! Your PetCode account is now active! Check your email for a
-					welcome to PetCode.
-				</Text>
-				<Box flexGrow={1} />
-				<Image src="/media/welcome-image.png" width="275px" />
-				<Box flexGrow={2} />
-			</Stack>
-		</Flex>
+		<>
+			<Head>
+				<title>PetCode - Welcome!</title>
+			</Head>
+			<Flex
+				direction="row"
+				justifyContent="center"
+				width="100%"
+				backgroundColor="petcode.blue.400"
+				minHeight="100vh">
+				<Stack
+					alignItems="center"
+					color="white"
+					paddingY={8}
+					paddingX={16}
+					boxSizing="content-box"
+					maxWidth="350px"
+					textAlign="center">
+					<Box flexGrow={1} />
+					<Image src="/media/petcode-logo-with-qr-code.png" height="4rem" />
+					<Box flexGrow={1} />
+					<Text fontWeight="bold" fontSize="2.5rem">
+						You're All Set!
+					</Text>
+					<Text fontSize="lg">
+						Congrats! Your PetCode account is now active! Check your email for a
+						welcome to PetCode.
+					</Text>
+					<Box flexGrow={1} />
+					<Image src="/media/welcome-image.png" width="275px" />
+					<Box flexGrow={2} />
+				</Stack>
+			</Flex>
+		</>
 	)
 }
 

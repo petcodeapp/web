@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import { Box, Flex, Stack, Text } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import DatePicker from 'react-datepicker'
@@ -43,147 +44,152 @@ const PetInformationStep: React.FC = () => {
 	const [state, dispatch] = useOnboarding()
 
 	return (
-		<Formik
-			initialValues={state.petInfo}
-			validationSchema={PetInformationSchema}
-			onSubmit={(values) => {
-				dispatch(onboardingActions.setPetInformation(values))
-				dispatch(onboardingActions.setStep('primary-owner-information'))
-			}}>
-			{({ errors, touched, handleSubmit, setFieldValue, values }) => {
-				let breedOptions: string[] = []
-				if (values.species === 'Dog') breedOptions = DOG_BREEDS
-				else if (values.species === 'Cat') breedOptions = CAT_BREEDS
+		<>
+			<Head>
+				<title>PetCode - Pet Information</title>
+			</Head>
+			<Formik
+				initialValues={state.petInfo}
+				validationSchema={PetInformationSchema}
+				onSubmit={(values) => {
+					dispatch(onboardingActions.setPetInformation(values))
+					dispatch(onboardingActions.setStep('primary-owner-information'))
+				}}>
+				{({ errors, touched, handleSubmit, setFieldValue, values }) => {
+					let breedOptions: string[] = []
+					if (values.species === 'Dog') breedOptions = DOG_BREEDS
+					else if (values.species === 'Cat') breedOptions = CAT_BREEDS
 
-				return (
-					<OnboardingContainer>
-						<Box flexGrow={1} />
-						<Flex direction="column">
-							<Text fontWeight="bold" fontSize="2.5rem">
-								Setting Up Your Tag:
-							</Text>
-							<Text
-								fontWeight="bold"
-								fontSize="2.5rem"
-								color="petcode.blue.400">
-								Pet Information
-							</Text>
-							<Text fontSize="lg" color="petcode.neutral.600">
-								Connect your tag to your pet’s information
-							</Text>
-						</Flex>
-						<Form>
-							<Stack spacing={6}>
-								<Field
-									as={OnboardingInput}
-									name="name"
-									placeholder="Pet Name"
-								/>
-								<Stack isInline spacing={6}>
-									<Box flexBasis="50%">
-										<OnboardingSelect
-											options={['Dog', 'Cat', 'Other'].map((option) => ({
-												label: option,
-												value: option,
-											}))}
-											value={
-												values.species
-													? {
-															label: values.species,
-															value: values.species,
-													  }
-													: null
-											}
-											onChange={(newValue: any) => {
-												setFieldValue('species', newValue.value)
-												setFieldValue('breed', '')
-											}}
-											placeholder="Species"
-											fontSize="lg"
-										/>
-									</Box>
-									<Box flexBasis="50%">
-										<OnboardingCreatable
-											options={breedOptions.map((breedOption) => ({
-												label: breedOption,
-												value: breedOption,
-											}))}
-											value={
-												values.breed
-													? {
-															label: values.breed,
-															value: values.breed,
-													  }
-													: null
-											}
-											onChange={(newValue: any) =>
-												setFieldValue('breed', newValue.value)
-											}
-											placeholder="Breed"
-											fontSize="lg"
-										/>
-									</Box>
+					return (
+						<OnboardingContainer>
+							<Box flexGrow={1} />
+							<Flex direction="column">
+								<Text fontWeight="bold" fontSize="2.5rem">
+									Setting Up Your Tag:
+								</Text>
+								<Text
+									fontWeight="bold"
+									fontSize="2.5rem"
+									color="petcode.blue.400">
+									Pet Information
+								</Text>
+								<Text fontSize="lg" color="petcode.neutral.600">
+									Connect your tag to your pet’s information
+								</Text>
+							</Flex>
+							<Form>
+								<Stack spacing={6}>
+									<Field
+										as={OnboardingInput}
+										name="name"
+										placeholder="Pet Name"
+									/>
+									<Stack isInline spacing={6}>
+										<Box flexBasis="50%">
+											<OnboardingSelect
+												options={['Dog', 'Cat', 'Other'].map((option) => ({
+													label: option,
+													value: option,
+												}))}
+												value={
+													values.species
+														? {
+																label: values.species,
+																value: values.species,
+														  }
+														: null
+												}
+												onChange={(newValue: any) => {
+													setFieldValue('species', newValue.value)
+													setFieldValue('breed', '')
+												}}
+												placeholder="Species"
+												fontSize="lg"
+											/>
+										</Box>
+										<Box flexBasis="50%">
+											<OnboardingCreatable
+												options={breedOptions.map((breedOption) => ({
+													label: breedOption,
+													value: breedOption,
+												}))}
+												value={
+													values.breed
+														? {
+																label: values.breed,
+																value: values.breed,
+														  }
+														: null
+												}
+												onChange={(newValue: any) =>
+													setFieldValue('breed', newValue.value)
+												}
+												placeholder="Breed"
+												fontSize="lg"
+											/>
+										</Box>
+									</Stack>
+									<Stack isInline spacing={6}>
+										<Box flexBasis="50%">
+											<DatePicker
+												selected={values.birthdate}
+												showPopperArrow={false}
+												onChange={(date) => setFieldValue('birthdate', date)}
+												placeholderText="Birthday"
+												customInput={<OnboardingInput />}
+											/>
+										</Box>
+										<Box flexBasis="50%">
+											<Field
+												as={OnboardingInput}
+												name="color"
+												placeholder="Color"
+											/>
+										</Box>
+									</Stack>
+									<Field
+										as={OnboardingInput}
+										name="temperament"
+										placeholder="Temperament"
+									/>
+									<OnboardingSelect
+										options={['Yes', 'No'].map((option) => ({
+											label: option,
+											value: option,
+										}))}
+										value={
+											values.isServiceAnimal != null
+												? {
+														label: values.isServiceAnimal ? 'Yes' : 'No',
+														value: values.isServiceAnimal ? 'Yes' : 'No',
+												  }
+												: null
+										}
+										onChange={(newValue: any) =>
+											setFieldValue('isServiceAnimal', newValue.value === 'Yes')
+										}
+										placeholder="Service Animal"
+										fontSize="lg"
+									/>
+									<UnifiedErrorMessage touched={touched} errors={errors} />
+									<BaseButton
+										alignSelf="end"
+										type="submit"
+										colorScheme="petcode.blue"
+										onClick={handleSubmit as any}>
+										<Text textTransform="uppercase" letterSpacing="0.07em">
+											Next Step
+										</Text>
+										<ChevronRightIcon boxSize="24px" />
+									</BaseButton>
 								</Stack>
-								<Stack isInline spacing={6}>
-									<Box flexBasis="50%">
-										<DatePicker
-											selected={values.birthdate}
-											showPopperArrow={false}
-											onChange={(date) => setFieldValue('birthdate', date)}
-											placeholderText="Birthday"
-											customInput={<OnboardingInput />}
-										/>
-									</Box>
-									<Box flexBasis="50%">
-										<Field
-											as={OnboardingInput}
-											name="color"
-											placeholder="Color"
-										/>
-									</Box>
-								</Stack>
-								<Field
-									as={OnboardingInput}
-									name="temperament"
-									placeholder="Temperament"
-								/>
-								<OnboardingSelect
-									options={['Yes', 'No'].map((option) => ({
-										label: option,
-										value: option,
-									}))}
-									value={
-										values.isServiceAnimal != null
-											? {
-													label: values.isServiceAnimal ? 'Yes' : 'No',
-													value: values.isServiceAnimal ? 'Yes' : 'No',
-											  }
-											: null
-									}
-									onChange={(newValue: any) =>
-										setFieldValue('isServiceAnimal', newValue.value === 'Yes')
-									}
-									placeholder="Service Animal"
-									fontSize="lg"
-								/>
-								<UnifiedErrorMessage touched={touched} errors={errors} />
-								<BaseButton
-									alignSelf="end"
-									type="submit"
-									colorScheme="petcode.blue"
-									onClick={handleSubmit as any}>
-									<Text textTransform="uppercase" letterSpacing="0.07em">
-										Next Step
-									</Text>
-									<ChevronRightIcon boxSize="24px" />
-								</BaseButton>
-							</Stack>
-						</Form>
-						<Box flexGrow={1} />
-					</OnboardingContainer>
-				)
-			}}
-		</Formik>
+							</Form>
+							<Box flexGrow={1} />
+						</OnboardingContainer>
+					)
+				}}
+			</Formik>
+		</>
 	)
 }
 
