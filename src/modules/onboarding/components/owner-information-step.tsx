@@ -81,21 +81,25 @@ const OwnerInformationStep: React.FC<OwnerInformationStepProps> = ({
 							<Field
 								as={OnboardingInput}
 								name="name"
+								autoComplete="name"
 								placeholder={`Full Name - Owner #${index + 1}`}
 							/>
 							<Field
 								as={OnboardingInput}
 								name="phoneNumber"
+								autoComplete="tel"
 								placeholder={`Phone Number - Owner #${index + 1}`}
 							/>
 							<Field
 								as={OnboardingInput}
 								name="email"
+								autoComplete="email"
 								placeholder={`Email Address - Owner #${index + 1}`}
 							/>
 							<Field
 								as={OnboardingInput}
 								name="address"
+								autoComplete="name"
 								placeholder={`Address - Owner #${index + 1}`}
 							/>
 							<UnifiedErrorMessage touched={touched} errors={errors} />
