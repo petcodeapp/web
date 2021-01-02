@@ -66,7 +66,10 @@ const Onboarding: React.FC = () => {
 			</OnboardingStep>
 			<OnboardingStep match={/^(primary|secondary)-owner-information$/}>
 				{(match) => (
-					<OwnerInformationStep level={match[1] as 'primary' | 'secondary'} />
+					<OwnerInformationStep
+						key={match[1]}
+						level={match[1] as 'primary' | 'secondary'}
+					/>
 				)}
 			</OnboardingStep>
 			<Box flexGrow={1} />
