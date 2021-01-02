@@ -1,5 +1,8 @@
 import React, { Dispatch, useCallback, useEffect, useReducer } from 'react'
-import onboardingReducer, { INITIAL_ONBOARDING_STATE } from '../reducers/index'
+import onboardingReducer, {
+	INITIAL_ONBOARDING_STATE,
+	IOnboardingState,
+} from '../reducers/index'
 
 export const OnboardingContext = React.createContext<
 	[
@@ -12,6 +15,22 @@ export const OnboardingContext = React.createContext<
 	]
 >(null)
 
+const deserializeState = (
+	serializedState: Record<string, any>
+): IOnboardingState => {
+	serializedState.petInfo.birthdate = new Date(
+		serializedState.petInfo.birthdate
+	)
+	serializedState.vaccinations.forEach((vaccination) => {
+		vaccination.date = new Date(vaccination.date)
+		vaccination.expirationDate = new Date(vaccination.expirationDate)
+	})
+	serializedState.reminders.forEach((reminder) => {
+		reminder.date = new Date(reminder.date)
+	})
+	return serializedState as IOnboardingState
+}
+
 const OnboardingProvider: React.FC = ({ children }) => {
 	// try to use local storage state from unless they're not navigating to a specific step
 	const shouldUsePersistedState =
@@ -21,7 +40,7 @@ const OnboardingProvider: React.FC = ({ children }) => {
 	const [state, dispatch] = useReducer<typeof onboardingReducer>(
 		onboardingReducer,
 		shouldUsePersistedState
-			? JSON.parse(localStorage.getItem('onboarding'))
+			? deserializeState(JSON.parse(localStorage.getItem('onboarding')))
 			: INITIAL_ONBOARDING_STATE
 	)
 
