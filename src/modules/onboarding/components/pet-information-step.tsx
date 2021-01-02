@@ -19,10 +19,10 @@ import { DOG_BREEDS, CAT_BREEDS } from '#data/breeds'
 import 'react-datepicker/dist/react-datepicker.min.css'
 
 const PetInformationSchema = Yup.object().shape({
-	petName: Yup.string().label('Pet name').required(),
+	name: Yup.string().label('Pet name').required(),
 	species: Yup.string().label('Species').required(),
 	breed: Yup.string().label('Breed').required(),
-	birthday: Yup.date()
+	birthdate: Yup.date()
 		.nullable()
 		.label('Birthday')
 		.test(
@@ -36,7 +36,7 @@ const PetInformationSchema = Yup.object().shape({
 		.required(),
 	color: Yup.string().label('Color').required(),
 	temperament: Yup.string().label('Temperament').required(),
-	serviceAnimal: Yup.boolean().nullable().label('Service Animal').required(),
+	isServiceAnimal: Yup.boolean().nullable().label('Service Animal').required(),
 })
 
 const PetInformationStep: React.FC = () => {
@@ -76,7 +76,7 @@ const PetInformationStep: React.FC = () => {
 							<Stack spacing={6}>
 								<Field
 									as={OnboardingInput}
-									name="petName"
+									name="name"
 									placeholder="Pet Name"
 								/>
 								<Stack isInline spacing={6}>
@@ -145,7 +145,7 @@ const PetInformationStep: React.FC = () => {
 										value: option,
 									}))}
 									onChange={(newValue: any) =>
-										setFieldValue('serviceAnimal', newValue.value === 'Yes')
+										setFieldValue('isServiceAnimal', newValue.value === 'Yes')
 									}
 									placeholder="Service Animal"
 									fontSize="lg"
