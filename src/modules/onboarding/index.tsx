@@ -12,6 +12,7 @@ import ConnectYourTagStep from './components/connect-your-tag-step'
 import PetInformationStep from './components/pet-information-step'
 import OwnerInformationStep from './components/owner-information-step'
 import MedicalInformationStep from './components/medical-information-step'
+import VaccinationHistoryStep from './components/vaccination-history-step'
 
 const OnboardingStep: React.FC<{
 	match: string | RegExp
@@ -75,6 +76,14 @@ const Onboarding: React.FC = () => {
 			</OnboardingStep>
 			<OnboardingStep match="medical-information">
 				{() => <MedicalInformationStep />}
+			</OnboardingStep>
+			<OnboardingStep match={/^vaccination-history(?:-([0-9]))?$/}>
+				{(match) => (
+					<VaccinationHistoryStep
+						key={match[1]}
+						index={Number(match[1] ?? 0)}
+					/>
+				)}
 			</OnboardingStep>
 			<Box flexGrow={1} />
 		</Flex>
