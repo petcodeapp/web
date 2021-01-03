@@ -86,7 +86,7 @@ const OnboardingCompletePage = () => {
 					.collection('users')
 					.doc(user.uid)
 					.set({
-						name: accountInfo.fullName,
+						fullName: accountInfo.fullName,
 						pets: [tagInfo.tagId],
 					})
 			}
