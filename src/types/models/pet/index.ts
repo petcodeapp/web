@@ -55,13 +55,14 @@ export class Pet implements IPet, AsInterface<IPet> {
 	vaccinations: Array<Vaccination>
 
 	constructor(id: string, _pet: IPet) {
-		let pet: IPet
+		const pet = {} as IPet
 
 		Object.assign(pet, _pet)
 
 		pet.vet = new Vet(pet.vet)
 		pet.contacts = pet.contacts.map((x) => new Contact(x))
 		pet.reminders = pet.reminders.map((x) => new Reminder(x))
+		pet.vaccinations = pet.vaccinations.map((x) => new Vaccination(x))
 
 		Object.assign(this, { ...pet, id })
 	}
@@ -90,6 +91,7 @@ export class Pet implements IPet, AsInterface<IPet> {
 	public static async get(id: string): Promise<Pet> {
 		return firebaseAdmin
 			.firestore()
+			.collection('pets')
 			.doc(id)
 			.get()
 			.then((doc) => {
@@ -103,6 +105,7 @@ export class Pet implements IPet, AsInterface<IPet> {
 	async getClient(id: string): Promise<Pet> {
 		return firebase
 			.firestore()
+			.collection('pets')
 			.doc(id)
 			.get()
 			.then((doc) => {
